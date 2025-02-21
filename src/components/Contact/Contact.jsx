@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import s from "./Contact.module.css";
 import { deleteContact } from "../../redux/contactsSlice";
 
-const Contact = ({ name, number, id }) => {
+const Contact = ({ name, phone, id }) => {
   const dispatch = useDispatch();
 
   return (
@@ -12,7 +12,7 @@ const Contact = ({ name, number, id }) => {
           <span className={s.span}>name: </span> {name}
         </p>
         <p className={s.contactNumber}>
-          <span className={s.span}>number: </span>{number}
+          <span className={s.span}>number: </span>{phone}
         </p>
       </div>
       <button
