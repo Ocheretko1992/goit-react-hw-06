@@ -23,8 +23,8 @@ const ContactForm = () => {
   const handleContact = (values, actions) => {
     const newContact = {
       id: crypto.randomUUID(),
-      name: values.username,
-      number: values.number,
+      name: values.username.trim(),
+      number: values.number.toString().trim(),
     };
     dispatch(addContact(newContact));
     actions.resetForm();

@@ -25,9 +25,14 @@
   padding: 7px 7px;
   font-size: 18px;
   height: 40px;
+  color: lightgreen;
 }
 .inputField:focus{
 background-color: teal;
+}
+.inputField:focus::placeholder {
+  color: greenyellow; 
+
 }
 
 .errorMessage {
