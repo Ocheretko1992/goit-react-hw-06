@@ -1,73 +1,69 @@
 import css from "./ContactForm.module.css";
-
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useId } from "react";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsOps";
-
-const FeedbackSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  number: Yup.string()
-    .matches(
-      /^(?:\d{10}|\d{3}-\d{3}-\d{2}-\d{2})$/,
-      "Phone number must be 10 digits long or in format xxx-xxx-xx-xx"
-    )
-    .required("Required"),
-});
+import { addContact } from "../../redux/contactsSlice";
 
 const ContactForm = () => {
-  const nameFieldId = useId();
-  const phoneFieldId = useId();
+  const FeedbackSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(3, "Min 3 symbol!")
+      .max(50, "Max 50 symbol!")
+      .required("Required"),
+    number: Yup.string().required("Required"),
+  });
 
   const dispatch = useDispatch();
 
+  const initialValues = {
+    username: "",
+    number: "",
+  };
+
+  const handleContact = (values, actions) => {
+    const newContact = {
+      id: crypto.randomUUID(),
+      name: values.username,
+      number: values.number,
+    };
+    dispatch(addContact(newContact));
+    actions.resetForm();
+  };
   return (
     <Formik
-      initialValues={{ username: "", number: "" }}
+      initialValues={initialValues}
       validationSchema={FeedbackSchema}
-      onSubmit={(values, actions) => {
-        const newContact = {
-          name: values.username,
-          number: values.number,
-        };
-        dispatch(addContact(newContact));
-        actions.resetForm();
-      }}
-    >
+      onSubmit={handleContact}>
       <Form className={css.formContainer}>
-        <label htmlFor={nameFieldId} className={css.label}>
-          Name
+        <label className={css.label}>
+          Name:
+          <Field
+            type="text"
+            name="username"
+            placeholder="Name. . ."
+            className={css.inputField}
+          />
+          <ErrorMessage
+            name="username"
+            component="span"
+            className={css.errorMessage}
+          />
         </label>
-        <Field
-          type="text"
-          name="username"
-          id={nameFieldId}
-          className={css.inputField}
-        />
-        <ErrorMessage
-          name="username"
-          component="span"
-          className={css.errorMessage}
-        />
 
-        <label htmlFor={phoneFieldId} className={css.label}>
-          Phone number
+        <label className={css.label}>
+          Phone number:
+          <Field
+            type="number"
+            placeholder="Number. . ."
+            name="number"
+            className={css.inputField}
+          />
+          <ErrorMessage
+            name="number"
+            component="span"
+            className={css.errorMessage}
+          />
         </label>
-        <Field
-          type="text"
-          name="number"
-          id={phoneFieldId}
-          className={css.inputField}
-        />
-        <ErrorMessage
-          name="number"
-          component="span"
-          className={css.errorMessage}
-        />
 
         <button type="submit" className={css.submitButton}>
           Add contact

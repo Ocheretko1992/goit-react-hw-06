@@ -1,24 +1,25 @@
 .contactList {
   display: flex;
-  flex-wrap: wrap;
+flex-direction: column;
   padding: 0;
   gap: 12px;
   margin-bottom: 32px;
 }
-  
+
 .contactItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  box-shadow: 2px 2px 2px 2px springgreen;
   border: 1px solid black;
   border-radius: 4px;
   margin-left: 10px;
   padding: 8px 12px;
-  width: 300px;
-
-  background-color: #fff;
+  width: 400px;
+  background-color: teal;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-
-  
+.contactItem:hover{
+  transform: scale(1.04);
+  box-shadow: 2px 8px 12px 2px springgreen;
+}
