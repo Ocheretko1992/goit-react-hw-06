@@ -19,7 +19,6 @@ const ContactForm = () => {
     username: "",
     number: "",
   };
-
   const handleContact = (values, actions) => {
     const newContact = {
       id: crypto.randomUUID(),
